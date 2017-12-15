@@ -1,0 +1,103 @@
+<p-tabView>
+  <p-tabPanel header="Available courses">
+    <p-autoComplete [(ngModel)]="course" [suggestions]="filteredCourses" (completeMethod)="getCourseByAbbr($event)" field="abbr" [size]="30"
+                    placeholder="Abbreviation" [minLength]="1" (keyup)="handleLastDelAbbr($event)" (onSelect)="selectHandle()"></p-autoComplete>
+    <p-autoComplete [(ngModel)]="course" [suggestions]="filteredCourses" (completeMethod)="getCourseTitle($event)" field="course_title" [size]="30"
+                    placeholder="Course title" [minLength]="1" (keyup)="handleLastDelTitle($event)" (onSelect)="selectHandle()"></p-autoComplete>
+    <br/>
+    <br/>
+    <br/>
+    <!--p-dataScroller [value]="filteredCourses" [rows]="10">
+      <ng-template let-course pTemplate="item">
+        <div class="ui-grid ui-grid-responsive ui-fluid" style="font-size:16px;padding:20px;border-bottom:1px solid #D5D5D5;">
+          <div class="ui-grid-row">
+            <div class="ui-grid-col-1">
+              <p>{{course.abbr}}</p>
+            </div>
+            <div class="ui-grid-col-1">
+              <p>        </p>
+            </div>
+            <div class="ui-grid-col-1">
+              <p>{{course.course_title}}</p>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </p-dataScroller-->
+    <li *ngFor="let course of filteredCourses">
+      <div class="ui-grid ui-grid-responsive ui-fluid" style="font-size:16px;padding:20px;border-bottom:1px solid #D5D5D5;">
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-1">
+            <p>{{course.abbr}}</p>
+          </div>
+          <div class="ui-grid-col-1">
+            <p>        </p>
+          </div>
+          <div class="ui-grid-col-2">
+            <p>{{course.course_title}}</p>
+          </div>
+          <div class="ui-grid-col-1">
+            <p>        </p>
+          </div>
+          <div class="ui-grid-col-1">
+            <a *ngIf="!getIsInMyCourses(course.id)" href="javascript:void(0)" (click)="addCourse(course)"><span class="fa fa-icon fa-plus" style="font-size: 1.1em;"></span></a>
+            <a *ngIf="getIsInMyCourses(course.id)" href="javascript:void(0)" (click)="unSelectCourse(course)"><span class="fa fa-icon fa-check" style="font-size: 1.1em;"></span></a>
+          </div>
+        </div>
+      </div>
+
+    </li>
+
+  </p-tabPanel>
+  <p-tabPanel header="My courses">
+    <li *ngFor="let course of myCourses">
+      <div class="ui-grid ui-grid-responsive ui-fluid" style="font-size:16px;padding:20px;border-bottom:1px solid #D5D5D5;">
+        <div class="ui-grid-row">
+
+          <div class="ui-grid-col-5">
+            <a href="javascript:void(0)" (click)="goToCoursePage(course.id)">
+              <div class="ui-grid-row">
+                <div class="ui-grid-col-1">
+                  <p>{{course.abbr}}</p>
+                </div>
+                <div class="ui-grid-col-2">
+                  <p>        </p>
+                </div>
+                <div class="ui-grid-col-2">
+                  <p>{{course.course_title}}</p>
+                </div>
+              </div>
+
+            </a>
+          </div>
+
+          <div class="ui-grid-col-1">
+            <p>        </p>
+          </div>
+          <div class="ui-grid-col-1">
+            <a *ngIf="getIsInMyCourses(course.id)" href="javascript:void(0)" (click)="unSelectCourse(course)"><span class="fa fa-icon fa-check" style="font-size: 1.1em;"></span></a>
+          </div>
+        </div>
+      </div>
+
+    </li>
+
+    <!--p-dataScroller [value]="myCourses" [rows]="10">
+      <ng-template let-course pTemplate="item">
+        <div class="ui-grid ui-grid-responsive ui-fluid" style="font-size:16px;padding:20px;border-bottom:1px solid #D5D5D5;">
+          <div class="ui-grid-row">
+            <div class="ui-grid-col-1">
+              <p>{{course.abbr}}</p>
+            </div>
+            <div class="ui-grid-col-1">
+              <p>        </p>
+            </div>
+            <div class="ui-grid-col-1">
+              <p>{{course.course_title}}</p>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </p-dataScroller-->
+  </p-tabPanel>
+</p-tabView>

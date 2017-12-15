@@ -1,0 +1,117 @@
+<p-tabView>
+  <p-tabPanel header="All students">
+    <p-autoComplete [(ngModel)]="studenname" [suggestions]="filteredStudents" (completeMethod)="getStudentByName($event)" field="firstname" [size]="30"
+                    placeholder="Firstname" [minLength]="1" (keyup)="handleEnter($event)" (onSelect) = "selectHandle()"></p-autoComplete>
+              <br/>
+              <br/>
+              <br/>
+    <li *ngFor="let student of filteredStudents">
+      <div class="ui-grid ui-grid-responsive ui-fluid" style="font-size:16px;padding:20px;border-bottom:1px solid #D5D5D5;">
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-1">
+            <p>{{student.firstname}}</p>
+          </div>
+          <div class="ui-grid-col-1">
+            <p>        </p>
+          </div>
+          <div class="ui-grid-col-2">
+            <p>{{student.lastname}}</p>
+          </div>
+          <div class="ui-grid-col-1">
+            <p>        </p>
+          </div>
+          <div class="ui-grid-col-1">
+            <a *ngIf="student.status==null" href="javascript:void(0)" (click)="addFriend(student)"><span class="fa fa-icon fa-plus" style="font-size: 1.1em;"></span></a>
+            <a *ngIf="(student.status==0)&&(student.active_stud_id==getCurrStudentId(student))" href="javascript:void(0)" (click)="deleteFriend(student)"><span  style="font-size: 1.1em;">Requested</span></a>
+            <a *ngIf="(student.status==0)&&(student.active_stud_id!==getCurrStudentId(student))" href="javascript:void(0)" (click)="confirmStudent(student)"><span  style="font-size: 1.1em;">Confirm</span></a>
+            <a *ngIf="(student.status==0)&&(student.active_stud_id!==getCurrStudentId(student))" href="javascript:void(0)" (click)="deleteFriend(student)"><span  style="font-size: 1.1em;">Reject</span></a>
+            <a *ngIf="student.status==1" href="javascript:void(0)" (click)="deleteFriend(student)"><span class="fa fa-icon fa-trash" style="font-size: 1.1em;"></span></a>
+          </div>
+        </div>
+      </div>
+
+    </li>
+  </p-tabPanel>
+  <p-tabPanel header="My friends">
+    <li *ngFor="let student of myFriends">
+      <div class="ui-grid ui-grid-responsive ui-fluid" style="font-size:16px;padding:20px;border-bottom:1px solid #D5D5D5;">
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-1">
+            <p>{{student.firstname}}</p>
+          </div>
+          <div class="ui-grid-col-1">
+            <p>        </p>
+          </div>
+          <div class="ui-grid-col-2">
+            <p>{{student.lastname}}</p>
+          </div>
+          <div class="ui-grid-col-1">
+            <p>        </p>
+          </div>
+          <div class="ui-grid-col-2">
+            <a href="javascript:void(0)" (click)="goToStudentProfile(student.chats_id)">
+              <span class="fa fa-icon fa-wechat"></span>
+            </a>
+          </div>
+          <div class="ui-grid-col-1">
+            <a  href="javascript:void(0)" (click)="deleteFriend(student)"><span class="fa fa-icon fa-trash" style="font-size: 1.1em;"></span></a>
+          </div>
+        </div>
+      </div>
+    </li>
+  </p-tabPanel>
+  <p-tabPanel header="Requested">
+    <p-tabView>
+      <p-tabPanel header="In">
+        <li *ngFor="let student of reqIn">
+          <!--a href="javascript:void(0)" (click)="goToStudentProfile(student.chats_id)"-->
+            <div class="ui-grid ui-grid-responsive ui-fluid" style="font-size:16px;padding:20px;border-bottom:1px solid #D5D5D5;">
+              <div class="ui-grid-row">
+                <div class="ui-grid-col-1">
+                  <p>{{student.firstname}}</p>
+                </div>
+                <div class="ui-grid-col-1">
+                  <p>        </p>
+                </div>
+                <div class="ui-grid-col-2">
+                  <p>{{student.lastname}}</p>
+                </div>
+                <div class="ui-grid-col-1">
+                  <p>        </p>
+                </div>
+                <div class="ui-grid-col-1">
+                  <a href="javascript:void(0)" (click)="confirmStudent(student)"><span  style="font-size: 1.1em;">Confirm</span></a>
+                  <a href="javascript:void(0)" (click)="deleteFriend(student)"><span  style="font-size: 1.1em;">Reject</span></a>
+                </div>
+
+              </div>
+            </div>
+          <!--/a-->
+        </li>
+      </p-tabPanel>
+      <p-tabPanel header="Out">
+        <li *ngFor="let student of reqOut">
+        <div class="ui-grid ui-grid-responsive ui-fluid" style="font-size:16px;padding:20px;border-bottom:1px solid #D5D5D5;">
+          <div class="ui-grid-row">
+            <div class="ui-grid-col-1">
+              <p>{{student.firstname}}</p>
+            </div>
+            <div class="ui-grid-col-1">
+              <p>        </p>
+            </div>
+            <div class="ui-grid-col-2">
+              <p>{{student.lastname}}</p>
+            </div>
+            <div class="ui-grid-col-1">
+              <p>        </p>
+            </div>
+            <div class="ui-grid-col-1">
+              <a  href="javascript:void(0)" (click)="deleteFriend(student)"><span  style="font-size: 1.1em;">Cancel</span></a>
+            </div>
+          </div>
+        </div>
+        </li>
+      </p-tabPanel>
+    </p-tabView>
+  </p-tabPanel>
+</p-tabView>

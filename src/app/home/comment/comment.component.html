@@ -1,0 +1,15 @@
+<p>{{post.content}}</p>
+<li *ngFor="let comment of postComments">
+  <p-panel header="{{comment.firstname}} {{comment.lastname}}" [toggleable]="true">
+    <p>{{comment.content}}</p>
+    <br/>
+    <p ngClass="date">{{ comment.date | date:'medium'}}</p>
+  </p-panel>
+  <br/>
+  <br/>
+</li>
+<p-footer>
+  <textarea pInputTextarea [(ngModel)]="comment.content"></textarea>
+  <br/>
+  <button pButton type="button" (click)="addComment(comment.content)" icon="fa-plus" label="Leave comment" class="ui-button-success"></button>
+</p-footer>
